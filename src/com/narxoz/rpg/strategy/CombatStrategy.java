@@ -1,31 +1,44 @@
 package com.narxoz.rpg.strategy;
 
-/**
- * Defines the combat algorithm a combatant uses when attacking and defending.
- * Implementations determine how base stats are modified during battle.
- */
 public interface CombatStrategy {
 
-    /**
-     * Calculates the actual damage to deal given the combatant's base attack power.
-     *
-     * @param basePower the combatant's raw attack power
-     * @return the effective damage to apply to the target
-     */
     int calculateDamage(int basePower);
-
-    /**
-     * Calculates the effective defense given the combatant's base defense stat.
-     *
-     * @param baseDefense the combatant's raw defense value
-     * @return the effective defense to subtract from incoming damage
-     */
     int calculateDefense(int baseDefense);
-
-    /**
-     * Returns the name of this strategy (used in battle logs).
-     *
-     * @return the display name of this strategy
-     */
     String getName();
+
+    class Aggressive implements CombatStrategy {
+        public int calculateDamage(int basePower) { return (int)(basePower * 1.5); }
+        public int calculateDefense(int baseDefense) { return (int)(baseDefense * 0.5); }
+        public String getName() { return "Aggressive"; }
+    }
+
+    class Defensive implements CombatStrategy {
+        public int calculateDamage(int basePower) { return (int)(basePower * 0.7); }
+        public int calculateDefense(int baseDefense) { return (int)(baseDefense * 1.5); }
+        public String getName() { return "Defensive"; }
+    }
+
+    class Balanced implements CombatStrategy {
+        public int calculateDamage(int basePower) { return basePower; }
+        public int calculateDefense(int baseDefense) { return baseDefense; }
+        public String getName() { return "Balanced"; }
+    }
+
+    class Phase1 implements CombatStrategy {
+        public int calculateDamage(int basePower) { return basePower; }
+        public int calculateDefense(int baseDefense) { return baseDefense; }
+        public String getName() { return "Phase 1"; }
+    }
+
+    class Phase2 implements CombatStrategy {
+        public int calculateDamage(int basePower) { return (int)(basePower * 1.4); }
+        public int calculateDefense(int baseDefense) { return (int)(baseDefense * 0.8); }
+        public String getName() { return "Phase 2"; }
+    }
+
+    class Phase3 implements CombatStrategy {
+        public int calculateDamage(int basePower) { return (int)(basePower * 2); }
+        public int calculateDefense(int baseDefense) { return 0; }
+        public String getName() { return "Phase 3"; }
+    }
 }
